@@ -22,9 +22,9 @@
 | **`change.gff3.add.intron.py`** | 为 GFF3 文件补齐 intron，规范 exon/CDS 的 ID（支持多转录本）。 |
 | **`gff.stat.py`** | 从 GFF3 统计基因、转录本、exon、CDS、intron 的起止、长度信息，输出 3 个表。 |
 | **`merge.file.based.on.keys.py`** | 按指定列（默认第 4 列）合并目标端与参考端的统计结果。 |
-| **`plot_introns_v2.py`** | 稳妥版绘图脚本：按染色体分面绘制 Intron 长度差分布图。 |
+| **`plot_introns_v2.py`** | 绘图脚本：按染色体分面绘制 Intron 长度差分布图。 |
 | **`intron_pipeline.py`** | 主控脚本：整合全流程，在生成 `<sample>.chr.tsv` 后自动调用 `plot_introns_v2.py` 出图。 |
-| **（可选）run_from_scratch.py** | 一键驱动脚本：可从 B73 注释开始直至绘图。 |
+| **（可选）run_from_scratch.py** | 驱动脚本：可从 B73 注释开始直至绘图。 |
 
 ---
 
