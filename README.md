@@ -1,4 +1,4 @@
-#  IntronDiff-Pipeline
+#  IntronMiner
 **从基因组比对到 Intron 差异可视化的一站式流程**
 
 ---
