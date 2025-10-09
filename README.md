@@ -59,7 +59,7 @@ pip install pandas plotnine mizani
 
 ##  五、使用流程
 
-### 方式 1️ ：一条命令从 Liftoff → 出图
+### 方式 1 ：一条命令从 Liftoff → 出图
 ```bash
 python intron_pipeline.py   --sample Mo17   --workdir ./work   --run-liftoff   --liftoff-bin liftoff   --minimap2-bin minimap2   --threads 16   --ref-fasta /path/to/B73.fa   --ref-gff /path/to/B73.gff3   --target-fasta /path/to/Mo17.fa   --ref-feature-tsv /path/to/B73.intron.exon.cds.stat.tsv   --plot-script /path/to/plot_introns_v2.py   --ylim-pos 40000 --ylim-neg-step 20000
 ```
@@ -77,14 +77,14 @@ work/
 
 ---
 
-### 方式 2️ ：已有 liftoff 结果，仅出图
+### 方式 2 ：已有 liftoff 结果，仅出图
 ```bash
 python intron_pipeline.py   --sample Mo17   --workdir ./work   --liftoff-mapped-gff ./work/Mo17.liftoff.B73.mapped.gff3_polished.gff3   --ref-feature-tsv ./work/B73.ref/B73.intron.exon.cds.stat.tsv   --plot-script ./plot_introns_v2.py
 ```
 
 ---
 
-### 方式 3️ ：仅绘图
+### 方式 3 ：仅绘图
 ```bash
 python plot_introns_v2.py   -i ./work/Mo17.liftoff/Mo17.chr.tsv   -o ./work/Mo17.liftoff/Mo17_Intron_Diff_ByChr_Horizontal_PosNeg.pdf   --ylim_pos 40000 --ylim_neg_step 20000
 ```
@@ -136,7 +136,7 @@ python plot_introns_v2.py   -i ./work/Mo17.liftoff/Mo17.chr.tsv   -o ./work/Mo17
 
 ##  十、推荐目录结构
 ```
-intron_diff_pipeline/
+IntronMinner/
 ├── change.gff3.add.intron.py
 ├── gff.stat.py
 ├── merge.file.based.on.keys.py
