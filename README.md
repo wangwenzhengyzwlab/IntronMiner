@@ -76,7 +76,7 @@ python plot_introns_v2.py -i ./work/Mo17.liftoff/Mo17.chr.tsv   -o ./work/Mo17.l
 
 ---
 
-## 🎨 Plot Parameters
+##  Plot Parameters
 | Parameter | Description |
 |:--|:--|
 | `-i, --input` | Input table (`*.chr.tsv`) |
@@ -105,7 +105,7 @@ python plot_introns_v2.py -i ./work/Mo17.liftoff/Mo17.chr.tsv   -o ./work/Mo17.l
 
 ---
 
-## 📂 Suggested Folder Structure
+##  Suggested Folder Structure
 ```
 intron_diff_pipeline/
 ├── change.gff3.add.intron.py
