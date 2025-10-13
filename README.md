@@ -1,3 +1,128 @@
+#  IntronDiff-Pipeline
+**A one-stop pipeline for comparing and visualizing intron length differences between genomes**
+
+---
+
+##  Overview
+`IntronDiff-Pipeline` is an automated workflow designed to **compare intron length differences across maize lines (or other species)**.  
+It integrates:
+1. **Liftoff-based gene annotation mapping**
+2. **Automated intron completion & GFF normalization**
+3. **Intron/Exon/CDS statistics**
+4. **File merging and delta computation by gene features**
+5. **Visualization of intron length differences per chromosome**
+
+---
+
+##  Components
+| File | Description |
+|:--|:--|
+| `change.gff3.add.intron.py` | Fill missing introns and normalize exon/CDS IDs in GFF3. |
+| `gff.stat.py` | Summarize gene/transcript/exon/CDS/intron positions and lengths. |
+| `merge.file.based.on.keys.py` | Merge reference and target statistics by key columns. |
+| `plot_introns_v2.py` | Robust plotting script by chromosome facets. |
+| `intron_pipeline.py` | Main pipeline controller, integrates the full process. |
+| `run_from_scratch.py` *(optional)* | One-click workflow from annotation to plot. |
+
+---
+
+##  Environment
+Python ≥ 3.8  
+```bash
+pip install pandas plotnine mizani
+```
+External dependencies: Liftoff, minimap2 (must be in `$PATH`).
+
+---
+
+##  Input Files
+| File Type | Description |
+|:--|:--|
+| Reference genome FASTA (`--ref-fasta`) | e.g., `B73.fa` |
+| Reference annotation GFF3 (`--ref-gff`) | Raw annotation; introns are auto-completed. |
+| Target genome FASTA (`--target-fasta`) | Target genome sequence (e.g., `Mo17.fa`). |
+
+> If Liftoff results already exist, use `--liftoff-mapped-gff` to skip mapping.
+
+---
+
+##  Usage
+
+### Option 1: From Liftoff to final visualization
+```bash
+python intron_pipeline.py --sample Mo17 --workdir ./work --run-liftoff   --liftoff-bin liftoff --minimap2-bin minimap2 --threads 16   --ref-fasta /path/to/B73.fa --ref-gff /path/to/B73.gff3   --target-fasta /path/to/Mo17.fa --ref-feature-tsv /path/to/B73.intron.exon.cds.stat.tsv   --plot-script /path/to/plot_introns_v2.py --ylim-pos 40000 --ylim-neg-step 20000
+```
+
+### Option 2: Using existing Liftoff results
+```bash
+python intron_pipeline.py --sample Mo17 --workdir ./work   --liftoff-mapped-gff ./work/Mo17.liftoff.B73.mapped.gff3_polished.gff3   --ref-feature-tsv ./work/B73.ref/B73.intron.exon.cds.stat.tsv   --plot-script ./plot_introns_v2.py
+```
+
+### Option 3: Plot only
+```bash
+python plot_introns_v2.py -i ./work/Mo17.liftoff/Mo17.chr.tsv   -o ./work/Mo17.liftoff/Mo17_Intron_Diff_ByChr_Horizontal_PosNeg.pdf   --ylim_pos 40000 --ylim_neg_step 20000
+```
+
+---
+
+##  Output Files
+| File | Description |
+|:--|:--|
+| `<sample>.liftoff.B73.mapped.gff3_polished.gff3` | Liftoff-mapped annotation |
+| `<sample>.liftoff.intron.exon.cds.stat.tsv` | Target genome feature summary |
+| `<sample>.liftoff.B73.combine.file.tsv` | Combined reference–target table |
+| `<sample>.chr.tsv` | Input table for plotting |
+| `<sample>_Intron_Diff_ByChr_Horizontal_PosNeg.pdf` | Visualization result |
+
+---
+
+## 🎨 Plot Parameters
+| Parameter | Description |
+|:--|:--|
+| `-i, --input` | Input table (`*.chr.tsv`) |
+| `-o, --output` | Output PDF |
+| `--ylim_pos` | Positive Y-axis limit |
+| `--ylim_neg_step` | Negative Y-axis scaling step |
+| `--facet_all` | Include all chromosomes |
+
+---
+
+##  Plot Features
+- One facet per chromosome  
+- Red: target > B73; Blue: target < B73  
+- X-axis: gene start position  
+- Y-axis: intron length difference (Target - B73)
+
+---
+
+##  Troubleshooting
+| Issue | Cause | Solution |
+|:--|:--|:--|
+| No PDF output | Outdated script | Update `plot_introns_v2.py`. |
+| facet_wrap error | Chromosome format mismatch | Use `--facet-all`. |
+| `.chr.tsv` empty | Key mismatch | Ensure introns are completed on both sides. |
+| ModuleNotFoundError | Missing dependency | `pip install plotnine mizani`. |
+
+---
+
+## 📂 Suggested Folder Structure
+```
+intron_diff_pipeline/
+├── change.gff3.add.intron.py
+├── gff.stat.py
+├── merge.file.based.on.keys.py
+├── intron_pipeline.py
+├── plot_introns_v2.py
+└── README.md
+```
+
+---
+
+##  Quick Test
+```bash
+python intron_pipeline.py --sample Mo17 --workdir ./work --run-liftoff   --ref-fasta B73.fa --ref-gff B73.gff3 --target-fasta Mo17.fa   --ref-feature-tsv ./B73.ref/B73.intron.exon.cds.stat.tsv --plot-script ./plot_introns_v2.py
+```
+Output: `./work/Mo17.liftoff/Mo17_Intron_Diff_ByChr_Horizontal_PosNeg.pdf`
 #  IntronMiner
 **从基因组比对到 Intron 差异可视化的一站式流程**
 
