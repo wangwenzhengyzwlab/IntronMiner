@@ -1,4 +1,4 @@
-#  IntronDiff-Pipeline
+#  IntronMiner
 **A one-stop pipeline for comparing and visualizing intron length differences between genomes**
 
 ---
